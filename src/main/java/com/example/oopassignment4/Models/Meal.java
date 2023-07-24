@@ -1,6 +1,7 @@
 package com.example.oopassignment4.Models;
 
 import com.example.oopassignment4.DBConnector;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
@@ -19,9 +20,11 @@ public class Meal {
     private double price;
     private boolean isVegan;
     private boolean glutenFree;
+    private Image mealImage;
 
     /**
      * Default constructor
+     *
      */
 
     public Meal(String name, ArrayList<Food> foods, double price, boolean dbAdd) {
@@ -56,11 +59,23 @@ public class Meal {
         if(dbAdd){
             DBConnector.addMeal(name, price, isVegan, isGlutenFree());
         }
+
+        setMealImage();
     }
+
+
 
     /**
      * Get/Set
      */
+
+    public Image getMealImage() {
+        return mealImage;
+    }
+
+    public void setMealImage() {
+        this.mealImage = this.foods.get(0).getImage();
+    }
 
     public int getId() {
         return id;

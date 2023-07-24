@@ -26,7 +26,7 @@ public class Controller implements Initializable {
 
         //DBConnector.DBTest();
 
-        DBConnector.addFood("Test meal", 150, true, false);
+        DBConnector.addFood("Test meal", 150, true, false, "placeholder.png");
         //DBConnector.addMeal("Test meal", 150, true, false);
         //DBConnector.addOrder(11.4, 113.3, 141.1, 1312.02);
         //DBConnector.addServer("Fictional Fred", 100);

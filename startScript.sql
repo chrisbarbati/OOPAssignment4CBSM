@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS foods(
     name varchar(30) NOT NULL,
     calories int NOT NULL,
     isVegan bool NOT NULL,
-    isGlutenFree bool NOT NULL
+    isGlutenFree bool NOT NULL,
+    imagePath varchar(50)
 );
 
 CREATE TABLE IF NOT EXISTS meals(
