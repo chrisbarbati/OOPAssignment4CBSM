@@ -26,7 +26,7 @@ public class Controller implements Initializable {
 
         //DBConnector.DBTest();
 
-        DBConnector.addFood("Test meal", 150, true, false, "placeholder.png");
+        //DBConnector.addFood("Test meal", 150, true, false, "placeholder.png");
         //DBConnector.addMeal("Test meal", 150, true, false);
         //DBConnector.addOrder(11.4, 113.3, 141.1, 1312.02);
         //DBConnector.addServer("Fictional Fred", 100);
@@ -38,7 +38,12 @@ public class Controller implements Initializable {
          */
         try{
             for(Food food : Food.getFoods()){
+                System.out.println(food.getId());
                 System.out.println(food.getName());
+                System.out.println(food.getImagePath());
+                System.out.println(food.isVegan());
+                System.out.println(food.isGlutenFree());
+
             }
         }catch(Exception e){
             System.out.println(e);

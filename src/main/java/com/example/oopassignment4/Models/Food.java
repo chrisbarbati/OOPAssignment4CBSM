@@ -36,6 +36,7 @@ public class Food {
         setCalories(calories);
         setVegan(isVegan);
         setGlutenFree(glutenFree);
+        setImagePath(imagePath);
         setImage(new Image(imagePath));
 
         if(dbAdd){
