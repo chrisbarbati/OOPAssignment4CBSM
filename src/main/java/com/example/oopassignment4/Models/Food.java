@@ -1,6 +1,9 @@
 package com.example.oopassignment4.Models;
 
+import com.example.oopassignment4.DBConnector;
 import javafx.scene.image.Image;
+
+import java.util.ArrayList;
 
 public class Food {
     /**
@@ -8,9 +11,14 @@ public class Food {
      */
 
     /**
+     * Static ArrayList to hold all foods instantiated and make them easier to access.
+     */
+    private static ArrayList<Food> foods = new ArrayList<>();
+
+    /**
      * Instance variables
      */
-
+    private int id;
     private String name;
     private int calories;
     private boolean isVegan;
@@ -21,17 +29,30 @@ public class Food {
      * Default constructor
      */
 
-    public Food(String name, int calories, boolean isVegan, boolean glutenFree, Image image) {
+    public Food(int id, String name, int calories, boolean isVegan, boolean glutenFree, Image image, boolean dbAdd) {
+        setId(id);
         setName(name);
         setCalories(calories);
         setVegan(isVegan);
         setGlutenFree(glutenFree);
         setImage(image);
+
+        if(dbAdd){
+            DBConnector.addFood(name, calories, isVegan, isGlutenFree());
+        }
     }
 
     /**
      * Get/Set
      */
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -71,5 +92,13 @@ public class Food {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    public static void addFood(Food food){
+        foods.add(food);
+    }
+
+    public static ArrayList<Food> getFoods(){
+        return foods;
     }
 }

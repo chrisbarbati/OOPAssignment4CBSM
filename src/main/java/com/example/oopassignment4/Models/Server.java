@@ -1,4 +1,6 @@
 package com.example.oopassignment4.Models;
+import com.example.oopassignment4.DBConnector;
+
 import java.util.ArrayList;
 
 public class Server {
@@ -9,6 +11,7 @@ public class Server {
     /**
      * Instance variables
      */
+    private int id;
     private String name;
     private ArrayList<Order> orders;
     private double totalTips;
@@ -17,7 +20,7 @@ public class Server {
      * Default constructor
      */
 
-    public Server(String name, ArrayList<Order> orders) {
+    public Server(String name, ArrayList<Order> orders, boolean dbAdd) {
         setName(name);
         setOrders(orders);
 
@@ -28,11 +31,24 @@ public class Server {
         for(Order order : orders){
             totalTips += order.getTips();
         }
+
+        //Only executes if the passed argument dbAdd is true, indicating that it should be added to the database
+        if(dbAdd){
+            DBConnector.addServer(name, totalTips);
+        }
     }
 
     /**
      * Get/set
      */
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

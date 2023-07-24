@@ -1,5 +1,7 @@
 package com.example.oopassignment4.Models;
 
+import com.example.oopassignment4.DBConnector;
+
 import java.util.ArrayList;
 
 public class Order {
@@ -13,6 +15,7 @@ public class Order {
      * Instance variables
      */
 
+    private int id;
     private ArrayList<Meal> meals;
     private double subTotal;
     private double taxRate;
@@ -23,7 +26,7 @@ public class Order {
      * Default constructor
      */
 
-    public Order(ArrayList<Meal> meals, double tips) {
+    public Order(ArrayList<Meal> meals, double tips, boolean dbAdd) {
         setMeals(meals);
         taxRate = 1.13; //Tax rate will not change, so we will always keep it as 1.13
         setTips(tips);
@@ -36,11 +39,23 @@ public class Order {
 
         //Calculate total based on subtotal and tips
         setTotal((subTotal + tips) * taxRate);
+
+        if(dbAdd){
+            DBConnector.addOrder(subTotal, taxRate, tips, total);
+        }
     }
 
     /**
      * Get/set
      */
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public ArrayList<Meal> getMeals() {
         return meals;

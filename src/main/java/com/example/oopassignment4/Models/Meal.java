@@ -1,5 +1,7 @@
 package com.example.oopassignment4.Models;
 
+import com.example.oopassignment4.DBConnector;
+
 import java.util.ArrayList;
 
 public class Meal {
@@ -11,18 +13,18 @@ public class Meal {
     /**
      * Instance variables
      */
-
+    private int id;
     private String name;
     private ArrayList<Food> foods;
     private double price;
     private boolean isVegan;
-    private boolean glutenGree;
+    private boolean glutenFree;
 
     /**
      * Default constructor
      */
 
-    public Meal(String name, ArrayList<Food> foods, double price, boolean isVegan, boolean glutenGree) {
+    public Meal(String name, ArrayList<Food> foods, double price, boolean dbAdd) {
         setName(name);
         setFoods(foods);
         setPrice(price);
@@ -44,17 +46,29 @@ public class Meal {
          */
         for(Food food : foods){
             if(food.isGlutenFree()){
-                setGlutenGree(true);
+                setGlutenFree(true);
             }else{
-                setGlutenGree(false);
+                setGlutenFree(false);
                 break;
             }
+        }
+
+        if(dbAdd){
+            DBConnector.addMeal(name, price, isVegan, isGlutenFree());
         }
     }
 
     /**
      * Get/Set
      */
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -88,11 +102,11 @@ public class Meal {
         isVegan = vegan;
     }
 
-    public boolean isGlutenGree() {
-        return glutenGree;
+    public boolean isGlutenFree() {
+        return glutenFree;
     }
 
-    public void setGlutenGree(boolean glutenGree) {
-        this.glutenGree = glutenGree;
+    public void setGlutenFree(boolean glutenFree) {
+        this.glutenFree = glutenFree;
     }
 }
