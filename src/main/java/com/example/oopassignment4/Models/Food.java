@@ -39,7 +39,7 @@ public class Food {
         setImage(new Image(imagePath));
 
         if(dbAdd){
-            DBConnector.addFood(name, calories, isVegan, isGlutenFree());
+            DBConnector.addFood(name, calories, isVegan, isGlutenFree(), imagePath);
         }
     }
 
@@ -62,7 +62,7 @@ public class Food {
         setImage(new Image(Meal.class.getResourceAsStream(this.imagePath)));
 
         if(dbAdd){
-            DBConnector.addFood(name, calories, isVegan, isGlutenFree());
+            DBConnector.addFood(name, calories, isVegan, isGlutenFree(), imagePath);
         }
     }
 
