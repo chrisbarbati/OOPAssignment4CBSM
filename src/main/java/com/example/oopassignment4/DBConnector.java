@@ -37,11 +37,11 @@ public class DBConnector {
      * Called from the constructors of each respective model, accepts arg for each instance variable,
      * and adds it to the table
      */
-    public static void addFood(String name, int calories, boolean isVegan, boolean isGlutenFree){
+    public static void addFood(String name, int calories, boolean isVegan, boolean isGlutenFree, String imagePath){
         try{
             //Use prepared statement to prevent sequel injection
             PreparedStatement newFood;
-            newFood = connection.prepareStatement("INSERT INTO foods(name, calories, isVegan, isGlutenFree) VALUES (?, ?, ?, ?);");
+            newFood = connection.prepareStatement("INSERT INTO foods(name, calories, isVegan, isGlutenFree, imagePath) VALUES (?, ?, ?, ?, ?);");
 
             /**
              * Set prepared statement values based on passed parameters
@@ -50,6 +50,7 @@ public class DBConnector {
             newFood.setInt(2, calories);
             newFood.setBoolean(3, isVegan);
             newFood.setBoolean(4, isGlutenFree);
+            newFood.setString(5, imagePath);
 
             newFood.executeUpdate();
         }catch(Exception e){
@@ -137,6 +138,7 @@ public class DBConnector {
             int calories;
             boolean isVegan;
             boolean isGlutenFree;
+            String imagePath;
 
             /**
              * Iterate over each record and instantiate the object into memory, with the dbAdd parameter in the constructor
@@ -148,6 +150,11 @@ public class DBConnector {
                 calories = foods.getInt("calories");
                 isVegan = foods.getBoolean("isVegan");
                 isGlutenFree = foods.getBoolean("isGlutenFree");
+                imagePath = foods.getString("imagePath");
+
+                if(imagePath == null){
+                    imagePath = "placeholder.png";
+                }
 
                 /**
                  * TODO
@@ -158,7 +165,7 @@ public class DBConnector {
                  *
                  * This lets us store the file path in the database.
                  */
-                Food.addFood(new Food(id, name, calories, isVegan, isGlutenFree, new Image(Main.class.getResourceAsStream("placeholder.png")), false));
+                Food.addFood(new Food(id, name, calories, isVegan, isGlutenFree, imagePath, false));
             }
         }catch(Exception e){
             System.out.println(e);
