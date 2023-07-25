@@ -1,9 +1,13 @@
 package com.example.oopassignment4;
 
 import com.example.oopassignment4.Models.Food;
+import com.example.oopassignment4.Models.Meal;
+import com.example.oopassignment4.Models.Order;
+import com.example.oopassignment4.Models.Server;
 import javafx.scene.image.Image;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DBConnector {
 
@@ -156,15 +160,6 @@ public class DBConnector {
                     imagePath = "placeholder.png";
                 }
 
-                /**
-                 * TODO
-                 * Implement image functionality.
-                 *
-                 * Pass argument as String instead, String being the path of the image,
-                 * and then instantiate new Image(path) inside the constructor.
-                 *
-                 * This lets us store the file path in the database.
-                 */
                 Food.addFood(new Food(id, name, calories, isVegan, isGlutenFree, imagePath, false));
             }
         }catch(Exception e){
@@ -173,14 +168,96 @@ public class DBConnector {
     }
 
     public static void instantiateMeals(){
+        try{
+            //Use prepared statement to prevent sequel injection
+            PreparedStatement getMeals;
 
+            //Get all records from the food table
+            getMeals = connection.prepareStatement("SELECT * FROM meals");
+
+            ResultSet meals = getMeals.executeQuery();
+
+            int id;
+            String name;
+            double price;
+            boolean isVegan;
+            boolean isGlutenFree;
+
+            /**
+             * Iterate over each record and instantiate the object into memory, with the dbAdd parameter in the constructor
+             * set to false, preventing duplicate records
+             */
+            while(meals.next()){
+                id = meals.getInt("ID");
+                name = meals.getString("name");
+                price = meals.getDouble("price");
+                Meal.addMeal(new Meal(id, name, new ArrayList<>(), price, false));
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     public static void instantiateOrders(){
+        try{
+            //Use prepared statement to prevent sequel injection
+            PreparedStatement getOrders;
 
+            //Get all records from the food table
+            getOrders = connection.prepareStatement("SELECT * FROM orders");
+
+            ResultSet orders = getOrders.executeQuery();
+
+            int id;
+            double subTotal;
+            double taxRate;
+            double tips;
+            double total;
+
+            /**
+             * Iterate over each record and instantiate the object into memory, with the dbAdd parameter in the constructor
+             * set to false, preventing duplicate records
+             */
+            while(orders.next()){
+                id = orders.getInt("ID");
+                subTotal = orders.getDouble("subtotal");
+                taxRate = orders.getDouble("taxRate");
+                tips = orders.getDouble("tips");
+                total = orders.getDouble("total");
+                Order.addOrder(new Order(id, new ArrayList<>(), tips, false));
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     public static void instantiateServers(){
+        try{
+            //Use prepared statement to prevent sequel injection
+            PreparedStatement getServers;
 
+            //Get all records from the food table
+            getServers = connection.prepareStatement("SELECT * FROM servers");
+
+            ResultSet servers = getServers.executeQuery();
+
+            int id;
+            String name;
+            double totalTips;
+
+            /**
+             * Iterate over each record and instantiate the object into memory, with the dbAdd parameter in the constructor
+             * set to false, preventing duplicate records
+             */
+            while(servers.next()){
+                id = servers.getInt("ID");
+                name = servers.getString("name");
+                totalTips = servers.getDouble("totalTips");
+                Server.addServer(new Server(id, name, new ArrayList<>(), false));
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
     }
+
 }

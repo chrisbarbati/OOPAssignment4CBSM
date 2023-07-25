@@ -21,7 +21,7 @@ public class Server {
      * Default constructor
      */
 
-    public Server(String name, ArrayList<Order> orders, boolean dbAdd) {
+    public Server(int id, String name, ArrayList<Order> orders, boolean dbAdd) {
         setName(name);
         setOrders(orders);
 
@@ -81,5 +81,8 @@ public class Server {
 
     public void setTotalTips(double totalTips) {
         this.totalTips = totalTips;
+    }
+    public static void addServer(Server server){
+        servers.add(server);
     }
 }

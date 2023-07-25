@@ -21,13 +21,14 @@ public class Order {
     private double taxRate;
     private double tips;
     private double total;
-    private static ArrayList<Order> orders = new ArrayList<Order>();
+    private static ArrayList<Order> orders = new ArrayList<>();
 
     /**
      * Default constructor
      */
 
-    public Order(ArrayList<Meal> meals, double tips, boolean dbAdd) {
+    public Order(int id, ArrayList<Meal> meals, double tips, boolean dbAdd) {
+        setId(id);
         setMeals(meals);
         taxRate = 1.13; //Tax rate will not change, so we will always keep it as 1.13
         setTips(tips);
@@ -100,5 +101,9 @@ public class Order {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public static void addOrder(Order order){
+        orders.add(order);
     }
 }

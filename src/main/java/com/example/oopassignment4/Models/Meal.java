@@ -29,7 +29,8 @@ public class Meal {
      *
      */
 
-    public Meal(String name, ArrayList<Food> foods, double price, boolean dbAdd) {
+    public Meal(int id, String name, ArrayList<Food> foods, double price, boolean dbAdd) {
+        setId(id);
         setName(name);
         setFoods(foods);
         setPrice(price);
@@ -57,6 +58,21 @@ public class Meal {
                 break;
             }
         }
+
+        if(dbAdd){
+            DBConnector.addMeal(name, price, isVegan, isGlutenFree());
+        }
+
+        //setMealImage(); Commented out momentarily
+    }
+
+    public Meal(int id, String name, ArrayList<Food> foods, double price, boolean isVegan, boolean isGlutenFree, boolean dbAdd) {
+        setId(id);
+        setName(name);
+        setFoods(foods);
+        setPrice(price);
+        setGlutenFree(isGlutenFree);
+        setVegan(isVegan);
 
         if(dbAdd){
             DBConnector.addMeal(name, price, isVegan, isGlutenFree());

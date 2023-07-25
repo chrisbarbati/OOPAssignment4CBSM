@@ -87,12 +87,8 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Tests");
-
         //Must be called once to initiate connection. Required for any database connectivity.
         DBConnector.startup();
-
-        //DBConnector.DBTest();
 
 //        DBConnector.addFood("Burger", 850, false, false);
 //        DBConnector.addFood("Apple", 150, true, true);
@@ -140,6 +136,7 @@ public class Controller implements Initializable {
         }catch(Exception e){
             System.out.println(e);
         }
+
     }
 }
 
