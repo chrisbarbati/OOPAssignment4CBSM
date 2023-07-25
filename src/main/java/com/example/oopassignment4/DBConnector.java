@@ -69,7 +69,6 @@ public class DBConnector {
             System.out.println(e);
         }
     }
-
     public static void addMeal(int orderId, String name, double price, boolean isVegan, boolean isGlutenFree){
         try{
             //Use prepared statement to prevent sequel injection
@@ -92,7 +91,6 @@ public class DBConnector {
             System.out.println(e);
         }
     }
-
     public static void addOrder(int serverId, double subTotal, double taxRate, double tips, double total){
         try{
             //Use prepared statement to prevent sequel injection
@@ -115,7 +113,6 @@ public class DBConnector {
             System.out.println(e);
         }
     }
-
     public static void addServer(String name, double totalTips){
         try{
             //Use prepared statement to prevent sequel injection
@@ -173,7 +170,6 @@ public class DBConnector {
             System.out.println(e);
         }
     }
-
     public static void instantiateOrders(){
         try{
             //Use prepared statement to prevent sequel injection
@@ -211,14 +207,13 @@ public class DBConnector {
                  */
                 Order currentOrder = new Order(id, new ArrayList<>(), tips, false);
                 Order.addOrder(currentOrder);
-                //Server.getServers().get(serverId-1).addOrder(currentOrder);
+                Server.getServers().get(serverId).addOrder(currentOrder);
 
             }
         }catch(Exception e){
             System.out.println(e);
         }
     }
-
     public static void instantiateMeals(){
         try{
             //Use prepared statement to prevent sequel injection
@@ -230,6 +225,7 @@ public class DBConnector {
             ResultSet meals = getMeals.executeQuery();
 
             int id;
+            int orderId;
             String name;
             double price;
             boolean isVegan;
@@ -239,11 +235,20 @@ public class DBConnector {
              * Iterate over each record and instantiate the object into memory, with the dbAdd parameter in the constructor
              * set to false, preventing duplicate records
              */
+
             while(meals.next()){
                 id = meals.getInt("ID");
+                orderId = meals.getInt("orderID");
                 name = meals.getString("name");
                 price = meals.getDouble("price");
-                Meal.addMeal(new Meal(id, name, new ArrayList<>(), price, false));
+
+                /**
+                 * Instantiate a new Meal object, then add it to the master ArrayList for Meals
+                 * and add it to this Order's meals Arraylist
+                 */
+                Meal currentMeal = new Meal(id, name, new ArrayList<>(), price, false);
+                Meal.addMeal(currentMeal);
+                Order.getOrders().get(orderId).addMeal(currentMeal);
 
                 nextMealId = id + 1;
             }
@@ -262,6 +267,7 @@ public class DBConnector {
             ResultSet foods = getFood.executeQuery();
 
             int id;
+            int mealId;
             String name;
             int calories;
             boolean isVegan;
@@ -274,6 +280,7 @@ public class DBConnector {
              */
             while(foods.next()){
                 id = foods.getInt("ID");
+                mealId = foods.getInt("mealID");
                 name = foods.getString("name");
                 calories = foods.getInt("calories");
                 isVegan = foods.getBoolean("isVegan");
@@ -286,15 +293,19 @@ public class DBConnector {
                     imagePath = "placeholder.png";
                 }
 
+                /**
+                 * Instantiate a new Meal object, then add it to the master ArrayList for Meals
+                 * and add it to this Order's meals Arraylist
+                 */
+                Food currentFood = new Food(id, name, calories, isVegan, isGlutenFree, imagePath, false);
+                Food.addFood(currentFood);
+                Meal.getMeals().get(mealId).addFood(currentFood);
+
+
                 Food.addFood(new Food(id, name, calories, isVegan, isGlutenFree, imagePath, false));
             }
         }catch(Exception e){
             System.out.println(e);
         }
     }
-
-
-
-
-
 }

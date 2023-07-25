@@ -90,6 +90,9 @@ public class Controller implements Initializable {
         //Must be called once to initiate connection. Required for any database connectivity.
         DBConnector.startup();
 
+        /**
+         * Instantiate all the objects stored in the database
+         */
         DBConnector.instantiateServers();
         DBConnector.instantiateOrders();
         DBConnector.instantiateMeals();
@@ -120,38 +123,19 @@ public class Controller implements Initializable {
 
                 for(Order order : server.getOrders()){
                     System.out.println("Order ID: " + order.getId());
+
+                    for(Meal meal : order.getMeals()){
+                        System.out.println("Meal Name: " + meal.getName());
+
+                        for(Food food : meal.getFoods()){
+                            System.out.println("Food Name: " + food.getName());
+                        }
+                    }
                 }
             }
         }catch(Exception e){
             System.out.println(e);
         }
-/*
-        try{
-            for(Order order : Order.getOrders()){
-                System.out.println(order.getId());
-            }
-        }catch(Exception e){
-            System.out.println(e);
-        }
-
-        try{
-            for(Meal meal : Meal.getMeals()){
-                System.out.println(meal.getName());
-            }
-        }catch(Exception e){
-            System.out.println(e);
-        }
-
-        try{
-            for(Food food : Food.getFoods()){
-                System.out.println(food.getName());
-            }
-        }catch(Exception e){
-            System.out.println(e);
-        }
-*/
-
-
     }
 }
 

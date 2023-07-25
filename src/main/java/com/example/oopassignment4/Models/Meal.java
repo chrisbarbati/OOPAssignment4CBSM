@@ -149,4 +149,9 @@ public class Meal {
     public static ArrayList<Meal> getMeals(){
         return meals;
     }
+
+    public void addFood(Food food){
+        foods.add(food);
+    }
+
 }

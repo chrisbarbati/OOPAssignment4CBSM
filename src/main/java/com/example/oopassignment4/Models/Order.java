@@ -109,4 +109,8 @@ public class Order {
     public static void addOrder(Order order){
         orders.add(order);
     }
+
+    public void addMeal(Meal meal){
+        meals.add(meal);
+    }
 }
