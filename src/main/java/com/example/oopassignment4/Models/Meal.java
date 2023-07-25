@@ -32,10 +32,11 @@ public class Meal {
 
     public Meal(int id, int orderId, String name, ArrayList<Food> foods, double price, boolean dbAdd) {
         setId(id);
-
+        setOrderId(orderId);
         setName(name);
         setFoods(foods);
         setPrice(price);
+
         /*
             Check if all the foods inside are vegan, and set whether meal
             is vegan based on this
@@ -81,6 +82,40 @@ public class Meal {
         }
 
         setMealImage();
+    }
+
+    /**
+     * Functions to update the vegan and gluten-free status for the meal item. Needs to be called
+     * after instantiating the models from the database in order to ensure data is accurate.
+     */
+    public void updateVegan(){
+        /*
+            Check if all the foods inside are vegan, and set whether meal
+            is vegan based on this
+         */
+        for(Food food : foods){
+            if(food.isVegan()){
+                setVegan(true);
+            }else{
+                setVegan(false);
+                break;
+            }
+        }
+    }
+
+    public void updateGluten(){
+        /*
+            Check if all the foods inside are gluten-free, and set whether meal
+            is gluten-free based on this
+         */
+        for(Food food : foods){
+            if(food.isGlutenFree()){
+                setGlutenFree(true);
+            }else{
+                setGlutenFree(false);
+                break;
+            }
+        }
     }
 
     /**
@@ -161,6 +196,11 @@ public class Meal {
 
     public void addFood(Food food){
         foods.add(food);
+        /**
+         * Call the below functions to update the gluten and vegan status whenever a new food is added
+         */
+        updateGluten();
+        updateVegan();
     }
 
 }

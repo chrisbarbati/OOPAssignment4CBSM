@@ -39,6 +39,16 @@ public class Server {
         }
     }
 
+    public void updateTips(){
+        /*
+            Calculate total tips based on tips for each of the Server's orders
+         */
+        setTotalTips(0);
+        for(Order order : orders){
+            totalTips += order.getTips();
+        }
+    }
+
     /**
      * Get/set
      */
@@ -88,5 +98,10 @@ public class Server {
 
     public void addOrder(Order order){
         orders.add(order);
+
+        /**
+         * Update the tips every time an order is added
+         */
+        updateTips();
     }
 }

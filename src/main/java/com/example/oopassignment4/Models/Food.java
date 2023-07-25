@@ -41,38 +41,11 @@ public class Food {
         setImagePath(imagePath);
         setImage(new Image(imagePath));
 
-        /*
-        if(dbAdd){
-            DBConnector.addFood(name, calories, isVegan, isGlutenFree(), imagePath);
-        }
-        */
-    }
 
-    /**
-     * If no imagePath is passed, sets image to a placeholder image.
-     * @param id
-     * @param name
-     * @param calories
-     * @param isVegan
-     * @param glutenFree
-     * @param dbAdd
-     */
-    public Food(int id, int mealId, String name, int calories, boolean isVegan, boolean glutenFree, boolean dbAdd) {
-        setId(id);
-        setMealId(mealId);
-        setName(name);
-        setCalories(calories);
-        setVegan(isVegan);
-        setGlutenFree(glutenFree);
-        setImagePath("placeholder.png");
-        setImage(new Image(Meal.class.getResourceAsStream(this.imagePath)));
-
-        /*
         if(dbAdd){
-            DBConnector.addFood(name, calories, isVegan, isGlutenFree(), imagePath);
+            DBConnector.addFood(mealId, name, calories, isVegan, isGlutenFree(), imagePath);
         }
 
-         */
     }
 
     /**

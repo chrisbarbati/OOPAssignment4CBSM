@@ -48,8 +48,17 @@ public class Order {
         if(dbAdd){
             DBConnector.addOrder(serverId, subTotal, taxRate, tips, total);
         }
+    }
 
+    public void updateTotals(){
+        //Start total at zero, set based on total price of meals
+        setSubTotal(0);
+        for(Meal meal : meals){
+            subTotal += meal.getPrice();
+        }
 
+        //Calculate total based on subtotal and tips
+        setTotal((subTotal + tips) * taxRate);
     }
 
     /**
@@ -122,5 +131,10 @@ public class Order {
 
     public void addMeal(Meal meal){
         meals.add(meal);
+
+        /**
+         * Called whenever a meal is added, to update the totals.
+         */
+        updateTotals();
     }
 }
