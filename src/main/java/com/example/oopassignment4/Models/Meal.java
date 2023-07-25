@@ -15,6 +15,7 @@ public class Meal {
      * Instance variables
      */
     private int id;
+    private int orderId;
     private String name;
     private ArrayList<Food> foods;
     private double price;
@@ -29,8 +30,9 @@ public class Meal {
      *
      */
 
-    public Meal(int id, String name, ArrayList<Food> foods, double price, boolean dbAdd) {
+    public Meal(int id, int orderId, String name, ArrayList<Food> foods, double price, boolean dbAdd) {
         setId(id);
+
         setName(name);
         setFoods(foods);
         setPrice(price);
@@ -58,15 +60,15 @@ public class Meal {
                 break;
             }
         }
-        /*
+
         if(dbAdd){
-            DBConnector.addMeal(name, price, isVegan, isGlutenFree());
+            DBConnector.addMeal(orderId, name, price, isVegan, isGlutenFree());
         }
-        */
+
         //setMealImage(); Commented out momentarily
     }
 
-    public Meal(int id, String name, ArrayList<Food> foods, double price, boolean isVegan, boolean isGlutenFree, boolean dbAdd) {
+    public Meal(int id, int orderId, String name, ArrayList<Food> foods, double price, boolean isVegan, boolean isGlutenFree, boolean dbAdd) {
         setId(id);
         setName(name);
         setFoods(foods);
@@ -74,17 +76,24 @@ public class Meal {
         setGlutenFree(isGlutenFree);
         setVegan(isVegan);
 
-        /*
         if(dbAdd){
-            DBConnector.addMeal(name, price, isVegan, isGlutenFree());
+            DBConnector.addMeal(orderId, name, price, isVegan, isGlutenFree());
         }
-        */
+
         setMealImage();
     }
 
     /**
      * Get/Set
      */
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 
     public Image getMealImage() {
         return mealImage;

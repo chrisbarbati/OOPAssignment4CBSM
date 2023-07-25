@@ -16,6 +16,7 @@ public class Order {
      */
 
     private int id;
+    private int serverId;
     private ArrayList<Meal> meals;
     private double subTotal;
     private double taxRate;
@@ -27,8 +28,9 @@ public class Order {
      * Default constructor
      */
 
-    public Order(int id, ArrayList<Meal> meals, double tips, boolean dbAdd) {
+    public Order(int id, int serverId, ArrayList<Meal> meals, double tips, boolean dbAdd) {
         setId(id);
+        setServerId(serverId);
         setMeals(meals);
         taxRate = 1.13; //Tax rate will not change, so we will always keep it as 1.13
         setTips(tips);
@@ -42,17 +44,25 @@ public class Order {
         //Calculate total based on subtotal and tips
         setTotal((subTotal + tips) * taxRate);
 
-        /*
+
         if(dbAdd){
-            DBConnector.addOrder(subTotal, taxRate, tips, total);
+            DBConnector.addOrder(serverId, subTotal, taxRate, tips, total);
         }
 
-        */
+
     }
 
     /**
      * Get/set
      */
+
+    public int getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(int serverId) {
+        this.serverId = serverId;
+    }
 
     public static ArrayList<Order> getOrders() {
         return orders;

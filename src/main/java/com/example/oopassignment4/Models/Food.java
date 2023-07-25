@@ -19,6 +19,7 @@ public class Food {
      * Instance variables
      */
     private int id;
+    private int mealId;
     private String name;
     private int calories;
     private boolean isVegan;
@@ -30,8 +31,9 @@ public class Food {
      * Default constructor
      */
 
-    public Food(int id, String name, int calories, boolean isVegan, boolean glutenFree, String imagePath, boolean dbAdd) {
+    public Food(int id, int mealId, String name, int calories, boolean isVegan, boolean glutenFree, String imagePath, boolean dbAdd) {
         setId(id);
+        setMealId(mealId);
         setName(name);
         setCalories(calories);
         setVegan(isVegan);
@@ -55,8 +57,9 @@ public class Food {
      * @param glutenFree
      * @param dbAdd
      */
-    public Food(int id, String name, int calories, boolean isVegan, boolean glutenFree, boolean dbAdd) {
+    public Food(int id, int mealId, String name, int calories, boolean isVegan, boolean glutenFree, boolean dbAdd) {
         setId(id);
+        setMealId(mealId);
         setName(name);
         setCalories(calories);
         setVegan(isVegan);
@@ -75,6 +78,14 @@ public class Food {
     /**
      * Get/Set
      */
+
+    public int getMealId() {
+        return mealId;
+    }
+
+    public void setMealId(int mealId) {
+        this.mealId = mealId;
+    }
 
     public int getId() {
         return id;

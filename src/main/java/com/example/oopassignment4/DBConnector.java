@@ -205,7 +205,7 @@ public class DBConnector {
                  * Instantiate a new Order object, then add it to the master ArrayList for Orders
                  * and add it to this Server's orders Arraylist
                  */
-                Order currentOrder = new Order(id, new ArrayList<>(), tips, false);
+                Order currentOrder = new Order(id, serverId, new ArrayList<>(), tips, false);
                 Order.addOrder(currentOrder);
                 Server.getServers().get(serverId).addOrder(currentOrder);
 
@@ -246,7 +246,7 @@ public class DBConnector {
                  * Instantiate a new Meal object, then add it to the master ArrayList for Meals
                  * and add it to this Order's meals Arraylist
                  */
-                Meal currentMeal = new Meal(id, name, new ArrayList<>(), price, false);
+                Meal currentMeal = new Meal(id, orderId, name, new ArrayList<>(), price, false);
                 Meal.addMeal(currentMeal);
                 Order.getOrders().get(orderId).addMeal(currentMeal);
 
@@ -297,12 +297,12 @@ public class DBConnector {
                  * Instantiate a new Meal object, then add it to the master ArrayList for Meals
                  * and add it to this Order's meals Arraylist
                  */
-                Food currentFood = new Food(id, name, calories, isVegan, isGlutenFree, imagePath, false);
+                Food currentFood = new Food(id, mealId, name, calories, isVegan, isGlutenFree, imagePath, false);
                 Food.addFood(currentFood);
                 Meal.getMeals().get(mealId).addFood(currentFood);
 
 
-                Food.addFood(new Food(id, name, calories, isVegan, isGlutenFree, imagePath, false));
+                Food.addFood(new Food(id, mealId, name, calories, isVegan, isGlutenFree, imagePath, false));
             }
         }catch(Exception e){
             System.out.println(e);
