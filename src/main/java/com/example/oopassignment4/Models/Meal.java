@@ -65,14 +65,6 @@ public class Meal {
         setMealImage();
     }
 
-    public Meal(int id, String name, double price, boolean isVegan, boolean glutenFree, boolean dbAdd) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.isVegan = isVegan;
-        this.glutenFree = glutenFree;
-    }
-
     /**
      * Get/Set
      */
