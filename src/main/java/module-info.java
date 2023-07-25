@@ -7,4 +7,6 @@ module com.example.oopassignment4 {
 
     opens com.example.oopassignment4 to javafx.fxml;
     exports com.example.oopassignment4;
+    exports com.example.oopassignment4.Controllers;
+    opens com.example.oopassignment4.Controllers to javafx.fxml;
 }

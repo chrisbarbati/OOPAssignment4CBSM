@@ -15,6 +15,7 @@ public class Server {
     private String name;
     private ArrayList<Order> orders;
     private double totalTips;
+    private static ArrayList<Server> servers = new ArrayList<>();
 
     /**
      * Default constructor
@@ -41,6 +42,14 @@ public class Server {
     /**
      * Get/set
      */
+
+    public static ArrayList<Server> getServers() {
+        return servers;
+    }
+
+    public void setServers(ArrayList<Server> servers) {
+        this.servers = servers;
+    }
 
     public int getId() {
         return id;

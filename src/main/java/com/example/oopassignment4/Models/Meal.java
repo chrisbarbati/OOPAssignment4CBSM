@@ -22,6 +22,8 @@ public class Meal {
     private boolean glutenFree;
     private Image mealImage;
 
+    private static ArrayList<Meal> meals = new ArrayList<>();
+
     /**
      * Default constructor
      *
@@ -63,7 +65,13 @@ public class Meal {
         setMealImage();
     }
 
-
+    public Meal(int id, String name, double price, boolean isVegan, boolean glutenFree, boolean dbAdd) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.isVegan = isVegan;
+        this.glutenFree = glutenFree;
+    }
 
     /**
      * Get/Set
@@ -123,5 +131,13 @@ public class Meal {
 
     public void setGlutenFree(boolean glutenFree) {
         this.glutenFree = glutenFree;
+    }
+
+    public static void addMeal(Meal meal){
+        meals.add(meal);
+    }
+
+    public static ArrayList<Meal> getMeals(){
+        return meals;
     }
 }

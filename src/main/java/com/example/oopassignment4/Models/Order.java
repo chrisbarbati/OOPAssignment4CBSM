@@ -21,6 +21,7 @@ public class Order {
     private double taxRate;
     private double tips;
     private double total;
+    private static ArrayList<Order> orders = new ArrayList<Order>();
 
     /**
      * Default constructor
@@ -45,9 +46,25 @@ public class Order {
         }
     }
 
+    public Order(int id, double subTotal, double taxRate, double tips, double total, boolean dbAdd) {
+        this.id = id;
+        this.subTotal = subTotal;
+        this.taxRate = taxRate;
+        this.tips = tips;
+        this.total = total;
+    }
+
     /**
      * Get/set
      */
+
+    public static ArrayList<Order> getOrders() {
+        return orders;
+    }
+
+    public static void setOrders(ArrayList<Order> orders) {
+        Order.orders = orders;
+    }
 
     public int getId() {
         return id;
