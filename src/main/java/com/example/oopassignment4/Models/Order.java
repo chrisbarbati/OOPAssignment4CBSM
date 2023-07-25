@@ -42,9 +42,12 @@ public class Order {
         //Calculate total based on subtotal and tips
         setTotal((subTotal + tips) * taxRate);
 
+        /*
         if(dbAdd){
             DBConnector.addOrder(subTotal, taxRate, tips, total);
         }
+
+        */
     }
 
     /**

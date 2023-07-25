@@ -85,4 +85,8 @@ public class Server {
     public static void addServer(Server server){
         servers.add(server);
     }
+
+    public void addOrder(Order order){
+        orders.add(order);
+    }
 }

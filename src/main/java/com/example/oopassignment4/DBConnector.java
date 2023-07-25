@@ -19,6 +19,11 @@ public class DBConnector {
      */
     private static Connection connection = null;
 
+    static int nextServerId = 0;
+    static int nextOrderId = 0;
+    static int nextMealId = 0;
+    static int nextFoodId = 0;
+
     /**
      * Method to contain all common connection code.
      *
@@ -41,20 +46,23 @@ public class DBConnector {
      * Called from the constructors of each respective model, accepts arg for each instance variable,
      * and adds it to the table
      */
-    public static void addFood(String name, int calories, boolean isVegan, boolean isGlutenFree, String imagePath){
+    public static void addFood(int mealID, String name, int calories, boolean isVegan, boolean isGlutenFree, String imagePath){
         try{
             //Use prepared statement to prevent sequel injection
             PreparedStatement newFood;
-            newFood = connection.prepareStatement("INSERT INTO foods(name, calories, isVegan, isGlutenFree, imagePath) VALUES (?, ?, ?, ?, ?);");
+            newFood = connection.prepareStatement("INSERT INTO foods(ID, mealID, name, calories, isVegan, isGlutenFree, imagePath) VALUES (?, ?, ?, ?, ?, ?, ?);");
 
             /**
              * Set prepared statement values based on passed parameters
              */
-            newFood.setString(1, name);
-            newFood.setInt(2, calories);
-            newFood.setBoolean(3, isVegan);
-            newFood.setBoolean(4, isGlutenFree);
-            newFood.setString(5, imagePath);
+            newFood.setInt(1, nextFoodId);
+            nextFoodId++;
+            newFood.setInt(2, mealID);
+            newFood.setString(3, name);
+            newFood.setInt(4, calories);
+            newFood.setBoolean(5, isVegan);
+            newFood.setBoolean(6, isGlutenFree);
+            newFood.setString(7, imagePath);
 
             newFood.executeUpdate();
         }catch(Exception e){
@@ -62,19 +70,22 @@ public class DBConnector {
         }
     }
 
-    public static void addMeal(String name, double price, boolean isVegan, boolean isGlutenFree){
+    public static void addMeal(int orderId, String name, double price, boolean isVegan, boolean isGlutenFree){
         try{
             //Use prepared statement to prevent sequel injection
             PreparedStatement newMeal;
-            newMeal = connection.prepareStatement("INSERT INTO meals(name, price, isVegan, isGlutenFree) VALUES (?, ?, ?, ?);");
+            newMeal = connection.prepareStatement("INSERT INTO meals(ID, orderId, name, price, isVegan, isGlutenFree) VALUES (?, ?, ?, ?, ?, ?);");
 
             /**
              * Set prepared statement values based on passed parameters
              */
-            newMeal.setString(1, name);
-            newMeal.setDouble(2, price);
-            newMeal.setBoolean(3, isVegan);
-            newMeal.setBoolean(4, isGlutenFree);
+            newMeal.setInt(1, nextMealId);
+            nextMealId++;
+            newMeal.setInt(2, orderId);
+            newMeal.setString(3, name);
+            newMeal.setDouble(4, price);
+            newMeal.setBoolean(5, isVegan);
+            newMeal.setBoolean(6, isGlutenFree);
 
             newMeal.executeUpdate();
         }catch(Exception e){
@@ -82,19 +93,22 @@ public class DBConnector {
         }
     }
 
-    public static void addOrder(double subTotal, double taxRate, double tips, double total){
+    public static void addOrder(int serverId, double subTotal, double taxRate, double tips, double total){
         try{
             //Use prepared statement to prevent sequel injection
             PreparedStatement newOrder;
-            newOrder = connection.prepareStatement("INSERT INTO orders(subtotal, taxRate, tips, total) VALUES (?, ?, ?, ?);");
+            newOrder = connection.prepareStatement("INSERT INTO orders(ID, serverId, subtotal, taxRate, tips, total) VALUES (?, ?, ?, ?, ?, ?);");
 
             /**
              * Set prepared statement values based on passed parameters
              */
-            newOrder.setDouble(1, subTotal);
-            newOrder.setDouble(2, taxRate);
-            newOrder.setDouble(3, tips);
-            newOrder.setDouble(4, total);
+            newOrder.setInt(1, nextOrderId);
+            nextOrderId++;
+            newOrder.setInt(2, serverId);
+            newOrder.setDouble(3, subTotal);
+            newOrder.setDouble(4, taxRate);
+            newOrder.setDouble(5, tips);
+            newOrder.setDouble(6, total);
 
             newOrder.executeUpdate();
         }catch(Exception e){
@@ -106,13 +120,15 @@ public class DBConnector {
         try{
             //Use prepared statement to prevent sequel injection
             PreparedStatement newServer;
-            newServer = connection.prepareStatement("INSERT INTO servers(name, totalTips) VALUES (?, ?);");
+            newServer = connection.prepareStatement("INSERT INTO servers(ID, name, totalTips) VALUES (?, ?, ?);");
 
             /**
              * Set prepared statement values based on passed parameters
              */
-            newServer.setString(1, name);
-            newServer.setDouble(2, totalTips);
+            newServer.setInt(1, nextServerId);
+            nextServerId++;
+            newServer.setString(2, name);
+            newServer.setDouble(3, totalTips);
 
             newServer.executeUpdate();
         }catch(Exception e){
@@ -127,40 +143,76 @@ public class DBConnector {
      * tables and instantiates the objects into memory.
      */
 
-    public static void instantiateFoods(){
+
+    public static void instantiateServers(){
         try{
             //Use prepared statement to prevent sequel injection
-            PreparedStatement getFood;
+            PreparedStatement getServers;
 
             //Get all records from the food table
-            getFood = connection.prepareStatement("SELECT * FROM foods");
+            getServers = connection.prepareStatement("SELECT * FROM servers");
 
-            ResultSet foods = getFood.executeQuery();
+            ResultSet servers = getServers.executeQuery();
 
             int id;
             String name;
-            int calories;
-            boolean isVegan;
-            boolean isGlutenFree;
-            String imagePath;
+            double totalTips;
 
             /**
              * Iterate over each record and instantiate the object into memory, with the dbAdd parameter in the constructor
              * set to false, preventing duplicate records
              */
-            while(foods.next()){
-                id = foods.getInt("ID");
-                name = foods.getString("name");
-                calories = foods.getInt("calories");
-                isVegan = foods.getBoolean("isVegan");
-                isGlutenFree = foods.getBoolean("isGlutenFree");
-                imagePath = foods.getString("imagePath");
+            while(servers.next()){
+                id = servers.getInt("ID");
+                name = servers.getString("name");
+                totalTips = servers.getDouble("totalTips");
+                Server.addServer(new Server(id, name, new ArrayList<>(), false));
+                nextServerId = id + 1;
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
 
-                if(imagePath == null){
-                    imagePath = "placeholder.png";
-                }
+    public static void instantiateOrders(){
+        try{
+            //Use prepared statement to prevent sequel injection
+            PreparedStatement getOrders;
 
-                Food.addFood(new Food(id, name, calories, isVegan, isGlutenFree, imagePath, false));
+            //Get all records from the food table
+            getOrders = connection.prepareStatement("SELECT * FROM orders");
+
+            ResultSet orders = getOrders.executeQuery();
+
+            int id;
+            int serverId;
+            double subTotal;
+            double taxRate;
+            double tips;
+            double total;
+
+            /**
+             * Iterate over each record and instantiate the object into memory, with the dbAdd parameter in the constructor
+             * set to false, preventing duplicate records
+             */
+            while(orders.next()){
+                id = orders.getInt("ID");
+                serverId = orders.getInt("serverID");
+                subTotal = orders.getDouble("subtotal");
+                taxRate = orders.getDouble("taxRate");
+                tips = orders.getDouble("tips");
+                total = orders.getDouble("total");
+
+                nextOrderId = id + 1;
+
+                /**
+                 * Instantiate a new Order object, then add it to the master ArrayList for Orders
+                 * and add it to this Server's orders Arraylist
+                 */
+                Order currentOrder = new Order(id, new ArrayList<>(), tips, false);
+                Order.addOrder(currentOrder);
+                //Server.getServers().get(serverId-1).addOrder(currentOrder);
+
             }
         }catch(Exception e){
             System.out.println(e);
@@ -192,72 +244,57 @@ public class DBConnector {
                 name = meals.getString("name");
                 price = meals.getDouble("price");
                 Meal.addMeal(new Meal(id, name, new ArrayList<>(), price, false));
+
+                nextMealId = id + 1;
             }
         }catch(Exception e){
             System.out.println(e);
         }
     }
-
-    public static void instantiateOrders(){
+    public static void instantiateFoods(){
         try{
             //Use prepared statement to prevent sequel injection
-            PreparedStatement getOrders;
+            PreparedStatement getFood;
 
             //Get all records from the food table
-            getOrders = connection.prepareStatement("SELECT * FROM orders");
+            getFood = connection.prepareStatement("SELECT * FROM foods");
 
-            ResultSet orders = getOrders.executeQuery();
-
-            int id;
-            double subTotal;
-            double taxRate;
-            double tips;
-            double total;
-
-            /**
-             * Iterate over each record and instantiate the object into memory, with the dbAdd parameter in the constructor
-             * set to false, preventing duplicate records
-             */
-            while(orders.next()){
-                id = orders.getInt("ID");
-                subTotal = orders.getDouble("subtotal");
-                taxRate = orders.getDouble("taxRate");
-                tips = orders.getDouble("tips");
-                total = orders.getDouble("total");
-                Order.addOrder(new Order(id, new ArrayList<>(), tips, false));
-            }
-        }catch(Exception e){
-            System.out.println(e);
-        }
-    }
-
-    public static void instantiateServers(){
-        try{
-            //Use prepared statement to prevent sequel injection
-            PreparedStatement getServers;
-
-            //Get all records from the food table
-            getServers = connection.prepareStatement("SELECT * FROM servers");
-
-            ResultSet servers = getServers.executeQuery();
+            ResultSet foods = getFood.executeQuery();
 
             int id;
             String name;
-            double totalTips;
+            int calories;
+            boolean isVegan;
+            boolean isGlutenFree;
+            String imagePath;
 
             /**
              * Iterate over each record and instantiate the object into memory, with the dbAdd parameter in the constructor
              * set to false, preventing duplicate records
              */
-            while(servers.next()){
-                id = servers.getInt("ID");
-                name = servers.getString("name");
-                totalTips = servers.getDouble("totalTips");
-                Server.addServer(new Server(id, name, new ArrayList<>(), false));
+            while(foods.next()){
+                id = foods.getInt("ID");
+                name = foods.getString("name");
+                calories = foods.getInt("calories");
+                isVegan = foods.getBoolean("isVegan");
+                isGlutenFree = foods.getBoolean("isGlutenFree");
+                imagePath = foods.getString("imagePath");
+
+                nextFoodId = id + 1;
+
+                if(imagePath == null){
+                    imagePath = "placeholder.png";
+                }
+
+                Food.addFood(new Food(id, name, calories, isVegan, isGlutenFree, imagePath, false));
             }
         }catch(Exception e){
             System.out.println(e);
         }
     }
+
+
+
+
 
 }

@@ -39,9 +39,11 @@ public class Food {
         setImagePath(imagePath);
         setImage(new Image(imagePath));
 
+        /*
         if(dbAdd){
             DBConnector.addFood(name, calories, isVegan, isGlutenFree(), imagePath);
         }
+        */
     }
 
     /**
@@ -62,9 +64,12 @@ public class Food {
         setImagePath("placeholder.png");
         setImage(new Image(Meal.class.getResourceAsStream(this.imagePath)));
 
+        /*
         if(dbAdd){
             DBConnector.addFood(name, calories, isVegan, isGlutenFree(), imagePath);
         }
+
+         */
     }
 
     /**

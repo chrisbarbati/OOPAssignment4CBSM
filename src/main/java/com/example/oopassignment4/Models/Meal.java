@@ -58,11 +58,11 @@ public class Meal {
                 break;
             }
         }
-
+        /*
         if(dbAdd){
             DBConnector.addMeal(name, price, isVegan, isGlutenFree());
         }
-
+        */
         //setMealImage(); Commented out momentarily
     }
 
@@ -74,10 +74,11 @@ public class Meal {
         setGlutenFree(isGlutenFree);
         setVegan(isVegan);
 
+        /*
         if(dbAdd){
             DBConnector.addMeal(name, price, isVegan, isGlutenFree());
         }
-
+        */
         setMealImage();
     }
 

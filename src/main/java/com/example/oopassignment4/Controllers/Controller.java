@@ -90,24 +90,45 @@ public class Controller implements Initializable {
         //Must be called once to initiate connection. Required for any database connectivity.
         DBConnector.startup();
 
-//        DBConnector.addFood("Burger", 850, false, false);
-//        DBConnector.addFood("Apple", 150, true, true);
-//        DBConnector.addMeal("Burger Combo", 14.99, false, false);
-//        DBConnector.addMeal("Rice Bowl Combo", 9.99, true, true);
-//        DBConnector.addOrder(11.4, 113.3, 141.1, 1312.02);
-//        DBConnector.addServer("Fictional Fred", 100);
-
-        DBConnector.instantiateFoods();
-        DBConnector.instantiateMeals();
-        DBConnector.instantiateOrders();
         DBConnector.instantiateServers();
+        DBConnector.instantiateOrders();
+        DBConnector.instantiateMeals();
+        DBConnector.instantiateFoods();
+
+        //DBConnector.addServer("Fictional Fred", 100);
+        //DBConnector.addServer("Imaginary Ivan", 100);
+        //DBConnector.addOrder(0, 114, 113.0, 1414.1, 12.02);
+        //DBConnector.addOrder(1, 12.5, 113.0, 1.1, 12.02);
+        //DBConnector.addMeal(0, "Burger Combo", 14.99, false, false);
+        //DBConnector.addMeal(0, "Burger Combo", 14.99, false, false);
+        //DBConnector.addMeal(0, "Burger Combo", 14.99, false, false);
+        //DBConnector.addMeal(1, "Rice Bowl Combo", 9.99, true, true);
+        //DBConnector.addFood(0, "Burger", 850, false, false, null);
+        //DBConnector.addFood(1, "Apple", 150, true, true, null);
+        //DBConnector.addFood(0, "Apple", 150, true, true, null);
+        //DBConnector.addFood(0, "Apple", 150, true, true, null);
+        //DBConnector.addFood(0, "Apple", 150, true, true, null);
 
         /**
          * Try/catch required in case of empty ArrayList
          */
+
+
         try{
-            for(Food food : Food.getFoods()){
-                System.out.println(food.getName());
+            for(Server server : Server.getServers()){
+                System.out.println("Server Name: " + server.getName());
+
+                for(Order order : server.getOrders()){
+                    System.out.println("Order ID: " + order.getId());
+                }
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+/*
+        try{
+            for(Order order : Order.getOrders()){
+                System.out.println(order.getId());
             }
         }catch(Exception e){
             System.out.println(e);
@@ -122,20 +143,14 @@ public class Controller implements Initializable {
         }
 
         try{
-            for(Order order : Order.getOrders()){
-                System.out.println(order.getId());
+            for(Food food : Food.getFoods()){
+                System.out.println(food.getName());
             }
         }catch(Exception e){
             System.out.println(e);
         }
+*/
 
-        try{
-            for(Server server : Server.getServers()){
-                System.out.println(server.getName());
-            }
-        }catch(Exception e){
-            System.out.println(e);
-        }
 
     }
 }
