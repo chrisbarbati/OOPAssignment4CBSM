@@ -1,20 +1,19 @@
 package com.example.oopassignment4.Controllers;
 
+import com.example.oopassignment4.Models.Food;
 import com.example.oopassignment4.Models.Order;
 import com.example.oopassignment4.Models.Server;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ServerController implements Initializable {
@@ -22,17 +21,12 @@ public class ServerController implements Initializable {
     @FXML
     private Button closeButton;
     @FXML
-    private ComboBox<Server> serverChoiceBox;
+    private ChoiceBox<String> serverChoiceBox, orderChoiceBox;
     @FXML
-    private Label orderInformation;
-
-    @FXML
-    private ListView<String> ordersListView;
-    @FXML
-    private Label totalTipsLabel;
-    private ArrayList<String> serverNames = new ArrayList<>();
-    private ArrayList<String> serverTips = new ArrayList<>();
-
+    private Label serverNameLabel, totalTipsLabel, orderIdLabel, orderTaxRateLabel, orderTotalLabel, orderSubtotalLabel, orderTipsLabel;
+    private ArrayList<ArrayList<Order>> serverOrders = new ArrayList<>();
+    private ArrayList<Server> listOfServers = new ArrayList<>();
+    private Server activeServer;
 
 
     //Method to close the current window using a button
@@ -42,66 +36,78 @@ public class ServerController implements Initializable {
         stage.close();
     }
 
-    public void updateOrders(){
-        if(serverChoiceBox.getValue().getOrders() != null){
-            ObservableList<String> serverOrders = FXCollections.observableArrayList();
-
-            for(Order order : serverChoiceBox.getValue().getOrders()){
-                serverOrders.add(String.valueOf(order.getId()));
-            }
-
-            ordersListView.setItems(serverOrders);
-        }
-
-        getServerTips();
-    }
-
-    public void updateOrderInfo(){
-        int selectedOrderNum = Integer.parseInt(ordersListView.getSelectionModel().getSelectedItem());
-
-        Order selectedOrder = Order.getOrders().get(selectedOrderNum);
-
-        orderInformation.setText(
-                "Sub-Total: " + String.format("$%.2f", selectedOrder.getSubTotal()) + "\n" +
-                        "Tip: " + String.format("$%.2f", selectedOrder.getTips()) + "\n"    +
-                        "Tax-Rate: " + String.format("$%.2f", (selectedOrder.getTaxRate() * 100 - 100)) + "%\n" +
-                        "Total: " + String.format("$%.2f", (selectedOrder.getTotal()))
-        );
-    }
-
+    //Initializes items in page
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        serverChoiceBox.setItems(FXCollections.observableArrayList(Server.getServers()));
-        serverChoiceBox.setOnAction(event -> updateOrders());
-        serverChoiceBox.getSelectionModel().selectFirst(); //Set first item to default selection
-        //Run both update functions once for the default selection
-        updateOrders();
+        //Adds Servers to Arraylist and their orders to a separate Arraylist
+        for(Server server : Server.getServers()) {
+            listOfServers.add(server);
+            serverOrders.add(server.getOrders());
+        }
 
+        //Adds Server names to choice box
+        for (int names = 0; names < listOfServers.size(); names++) {
+            serverChoiceBox.getItems().add(listOfServers.get(names).getName());
+        }
 
-        //Call an update function whenever the ListView items are selected
-        ordersListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                updateOrderInfo();
+        //Action event for selecting a server name from choice box
+        serverChoiceBox.setOnAction(this::getServerInfo);
+    }
+
+    //Method for when server choice box is selected
+    @FXML
+    public void getServerInfo(ActionEvent event) {
+
+        String activeServerName = serverChoiceBox.getValue();
+        serverNameLabel.setText(activeServerName);
+
+        //Sets active server information
+        for (int i = 0; i < listOfServers.size(); i++) {
+            if (activeServerName.equals(listOfServers.get(i).getName())){
+                activeServer = listOfServers.get(i);
+                totalTipsLabel.setText("$" + String.format("%.2f", activeServer.getTotalTips()));
+                break;
             }
-        });
+        }
 
-        ordersListView.getSelectionModel().selectFirst();
+        //Resets the Order Choice box each time a new Server is selected
+        orderChoiceBox.getItems().removeAll(orderChoiceBox.getItems());
 
-        //updateOrderInfo();
+        //Sets order numbers in choice box for selected server
+        for (int i = 0; i < activeServer.getOrders().size(); i++) {
+            Order currentOrder = activeServer.getOrders().get(i);
+            int currentOrderId = currentOrder.getId();
+            orderChoiceBox.getItems().add(String.valueOf(currentOrderId));
+        }
 
-        getServerTips();
-
+        //Action event for selecting an order id from choice box
+        orderChoiceBox.setOnAction(this::getOrderInfo);
     }
-@FXML
-    public void getServerTips() {
 
-        String serverName = String.format("$%.2f",serverChoiceBox.getValue().getTotalTips());
-        totalTipsLabel.setText(serverName);
+    @FXML
+    public void getOrderInfo(ActionEvent event) {
+        Order activeOrder;
+
+        String activeOrderId = orderChoiceBox.getValue();
+        orderIdLabel.setText(activeOrderId);
+
+        try {
+            //Sets active order information
+            for (int i = 0; i < serverOrders.size(); i++) {
+                for (int j = 0; j < serverOrders.get(i).size(); j++) {
+                    if (Integer.valueOf(activeOrderId) == serverOrders.get(i).get(j).getId()){
+                        activeOrder = serverOrders.get(i).get(j);
+                        orderSubtotalLabel.setText("$" + String.format("%.2f", activeOrder.getSubTotal()));
+                        orderTipsLabel.setText("$" + String.format("%.2f", activeOrder.getTips()));
+                        orderTaxRateLabel.setText(String.format("%.2f", activeOrder.getTaxRate()));
+                        orderTotalLabel.setText("$" + String.format("%.2f", activeOrder.getTotal()));
+                        break;
+                    }
+                }
+            }
+        } catch(Exception e){
+            System.out.println(e);
+        }
     }
-
-
-
-
 }

@@ -40,9 +40,6 @@ public class Controller implements Initializable {
     //Method to open the Servers page
     @FXML
     void goToServers(ActionEvent event) {
-        System.out.println("USER: " + usernameTextBox.getText());
-        System.out.println("PASS: " + passwordTextBox.getText());
-        System.out.println("ERROR TEXT: " + loginErrorText.getText());
         if (usernameTextBox.getText().equals("user") && passwordTextBox.getText().equals("password")) {
             loginErrorText.setText(" ");
             loginHintTextBox.setText(" ");

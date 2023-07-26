@@ -1,27 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oopassignment4.Controllers.ServerController">
-   <children>
-      <Text layoutX="80.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Orders" />
-      <Text layoutX="80.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a Server" />
-      <Button fx:id="closeButton" layoutX="537.0" layoutY="360.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
-      <Label fx:id="totalTipsLabel" layoutX="238.0" layoutY="76.0" text="Label">
-         <font>
-            <Font size="26.0" />
-         </font>
-      </Label>
-      <ListView fx:id="ordersListView" layoutX="238.0" layoutY="136.0" prefHeight="155.0" prefWidth="255.0" />
-      <Text layoutX="80.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Information:" />
-      <Label fx:id="orderInformation" layoutX="238.0" layoutY="311.0" prefHeight="63.0" prefWidth="255.0" text="Order information goes here" />
-      <ComboBox fx:id="serverChoiceBox" layoutX="238.0" layoutY="35.0" prefWidth="150.0" />
-      <Label layoutX="80.0" layoutY="86.0" text="Total Tips:" />
-   </children>
-</AnchorPane>
+<SplitPane dividerPositions="0.14799281006590775" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="559.0" prefWidth="495.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oopassignment4.Controllers.ServerController">
+   <items>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #F2CCC3;">
+         <children>
+            <Text layoutX="103.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a Server:">
+               <font>
+                  <Font name="Cambria" size="20.0" />
+               </font>
+            </Text>
+            <ChoiceBox fx:id="serverChoiceBox" layoutX="259.0" layoutY="27.0" prefWidth="150.0" />
+         </children></AnchorPane>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="465.0" prefWidth="493.0" style="-fx-background-color: #F2E9E4;">
+         <children>
+            <Label fx:id="serverNameLabel" alignment="CENTER" layoutX="46.0" layoutY="14.0" prefHeight="38.0" prefWidth="400.0" text="Server Name" underline="true">
+               <font>
+                  <Font name="Cambria" size="30.0" />
+               </font>
+            </Label>
+            <Button fx:id="closeButton" layoutX="444.0" layoutY="423.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+            <Label layoutX="31.0" layoutY="421.0" text="Total Tips:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalTipsLabel" alignment="CENTER" layoutX="128.0" layoutY="422.0" text="\$0.00" textFill="#03740c">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Text layoutX="128.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Orders">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <ChoiceBox fx:id="orderChoiceBox" layoutX="213.0" layoutY="67.0" prefWidth="150.0" />
+            <GridPane layoutX="83.0" layoutY="116.0" prefHeight="267.0" prefWidth="325.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label style="-fx-label-padding: 10;" text="Order Id:" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label style="-fx-label-padding: 10;" text="Subtotal:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label style="-fx-label-padding: 10;" text="Tax Rate:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label style="-fx-label-padding: 10;" text="Tips:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label style="-fx-label-padding: 10;" text="Total:" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="orderIdLabel" style="-fx-label-padding: 10;" text=" " GridPane.columnIndex="1" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="orderSubtotalLabel" style="-fx-label-padding: 10;" text=" " GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="orderTaxRateLabel" style="-fx-label-padding: 10;" text=" " GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="orderTipsLabel" style="-fx-label-padding: 10;" text=" " GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="orderTotalLabel" style="-fx-label-padding: 10;" text=" " GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+         </children></AnchorPane>
+   </items>
+</SplitPane>
