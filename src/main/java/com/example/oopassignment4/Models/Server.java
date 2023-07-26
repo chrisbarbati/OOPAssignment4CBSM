@@ -104,4 +104,8 @@ public class Server {
          */
         updateTips();
     }
+
+    public String toString(){
+        return getName();
+    }
 }
