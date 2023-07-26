@@ -133,6 +133,11 @@ public class Controller implements Initializable {
         }catch(Exception e){
             System.out.println(e);
         }
+
+        System.out.println(Food.getFoods().size());
+        for(Food food : Food.getFoods()){
+            System.out.println("Food Id: " + food.getId());
+        }
     }
 }
 
