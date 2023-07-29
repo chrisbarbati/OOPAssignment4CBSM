@@ -42,7 +42,7 @@ public class Order {
         }
 
         //Calculate total based on subtotal and tips
-        setTotal((subTotal * taxRate) + tips);
+        setTotal((subTotal + tips) * taxRate);
 
 
         if(dbAdd){
@@ -58,7 +58,7 @@ public class Order {
         }
 
         //Calculate total based on subtotal and tips
-        setTotal((subTotal * taxRate) + tips);
+        setTotal((subTotal + tips) * taxRate);
     }
 
     /**

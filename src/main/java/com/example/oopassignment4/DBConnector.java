@@ -300,9 +300,6 @@ public class DBConnector {
                 Food currentFood = new Food(id, mealId, name, calories, isVegan, isGlutenFree, imagePath, false);
                 Food.addFood(currentFood);
                 Meal.getMeals().get(mealId).addFood(currentFood);
-
-
-                Food.addFood(new Food(id, mealId, name, calories, isVegan, isGlutenFree, imagePath, false));
             }
         }catch(Exception e){
             System.out.println(e);
