@@ -104,9 +104,9 @@ public class Controller implements Initializable {
         //DBConnector.addMeal(0, "Burger Combo", 14.99, false, false);
         //DBConnector.addMeal(1, "Rice Bowl Combo", 9.99, true, true);
         //DBConnector.addFood(0, "Burger", 850, false, false, null);
-        //DBConnector.addFood(1, "Apple", 150, true, true, null);
-        //DBConnector.addFood(0, "Apple", 150, true, true, null);
-        //DBConnector.addFood(0, "Apple", 150, true, true, null);
+//        DBConnector.addFood(0, "Carrot", 50, true, true, null);
+//        DBConnector.addFood(0, "Chicken Breast", 640, false, true, null);
+//        DBConnector.addFood(0, "Meatball Spaghetti", 550, false, false, null);
         //DBConnector.addFood(0, "Apple", 150, true, true, null);
 
         /**

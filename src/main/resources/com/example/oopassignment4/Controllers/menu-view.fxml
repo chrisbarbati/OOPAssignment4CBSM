@@ -3,15 +3,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.20145089285714288" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oopassignment4.Controllers.MenuController">
+<SplitPane dividerPositions="0.20145089285714288" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oopassignment4.Controllers.MenuController">
     <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
             <children>
@@ -25,30 +24,77 @@
                         <Image url="@../../../../Restaurant-Logo-Templates.png" />
                     </image>
                 </ImageView>
-                <Button fx:id="closeButton" layoutX="759.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" text="X" />
+                <Button fx:id="closeButton" layoutX="722.0" layoutY="13.0" mnemonicParsing="false" onAction="#exit" text="Cancel" />
             </children></AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="481.0" prefWidth="797.0">
-            <children>
-                <GridPane layoutX="24.0" layoutY="33.0" prefHeight="327.0" prefWidth="750.0">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="250.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="100.33335367838541" minHeight="10.0" prefHeight="47.99997965494791" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="75.33331298828125" minHeight="10.0" prefHeight="44.000020345052064" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                    <children>
-                        <ImageView fx:id="imageBox1" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <ImageView fx:id="imageBox2" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <ImageView fx:id="imageBox3" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <Label fx:id="foodNameLabel1" text="Label" GridPane.rowIndex="1" />
-                        <Label fx:id="foodNameLabel2" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="foodNameLabel3" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                    </children>
-                </GridPane>
-            </children></AnchorPane>
+      <SplitPane dividerPositions="0.5008361204013377, 0.7504180602006689" prefHeight="485.0" prefWidth="469.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <VBox alignment="CENTER" layoutX="73.0" layoutY="14.0" prefHeight="397.0" prefWidth="250.0">
+                     <children>
+                        <ImageView fx:id="itemImageBox" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="foodIdLabel" style="-fx-label-padding: 4;" text="Label" />
+                        <Label fx:id="foodNameLabel" style="-fx-label-padding: 4;" text="Label" />
+                        <Label fx:id="foodCaloriesLabel" style="-fx-label-padding: 4;" text="Label" />
+                        <Label fx:id="isVeganLabel" style="-fx-label-padding: 4;" text="Label" />
+                        <Label fx:id="isGlutenFreeLabel" style="-fx-label-padding: 4;" text="Label" />
+                        <Button fx:id="addToMealButton" mnemonicParsing="false" onAction="#addToMeal" text="Add To Meal" />
+                     </children>
+                  </VBox>
+                  <Button fx:id="leftButton" layoutX="73.0" layoutY="421.0" mnemonicParsing="false" onAction="#previousItem" prefWidth="100.0" text="Previous Item" />
+                  <Button fx:id="rightButton" layoutX="223.0" layoutY="421.0" mnemonicParsing="false" onAction="#nextItem" prefWidth="100.0" text="Next Item" />
+               </children>
+            </AnchorPane>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="481.0" prefWidth="797.0">
+                  <children>
+                  <Button fx:id="addToOrderButton" layoutX="53.0" layoutY="421.0" mnemonicParsing="false" onAction="#addToOrder" text="Add to Order" />
+                  <VBox alignment="TOP_CENTER" layoutX="21.0" layoutY="26.0" prefHeight="355.0" prefWidth="150.0">
+                     <children>
+                        <Label style="-fx-label-padding: 5;" text="Meal Items" underline="true">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="mealItemsLabel" alignment="CENTER" style="-fx-label-padding: 5;" text="Meal Items" textAlignment="CENTER" textFill="#1e6dff">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="474.0" prefWidth="243.0">
+               <children>
+                  <Label fx:id="currentOrderLabel" layoutX="97.0" layoutY="155.0" text=" " />
+                  <VBox alignment="TOP_CENTER" layoutX="25.0" layoutY="25.0" prefHeight="355.0" prefWidth="150.0">
+                     <children>
+                        <Label fx:id="newOrderIdLabel" alignment="CENTER" style="-fx-label-padding: 5;" text="New Order Id" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label style="-fx-label-padding: 5;" text="Current Order" underline="true">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="orderItemsLabel" alignment="CENTER" style="-fx-label-padding: 5;" text="Order Items" textAlignment="CENTER" textFill="#1e6dff" wrapText="true">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <TextField fx:id="tipTextField" layoutX="23.0" layoutY="423.0" />
+                  <Label layoutX="80.0" layoutY="395.0" text="Tip: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
     </items>
 </SplitPane>
