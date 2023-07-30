@@ -36,7 +36,6 @@ public class DBConnector {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://oopassignment4cbsm.mysql.database.azure.com:3306/oopassignment?useSSL=true", "oopChristianShania", "j&HhN2BL70K19tB4");
         } catch (Exception e) {
-            System.out.println(e);
         }
     }
 
@@ -66,7 +65,6 @@ public class DBConnector {
 
             newFood.executeUpdate();
         }catch(Exception e){
-            System.out.println(e);
         }
     }
     public static void addMeal(int orderId, String name, double price, boolean isVegan, boolean isGlutenFree){
@@ -88,7 +86,6 @@ public class DBConnector {
 
             newMeal.executeUpdate();
         }catch(Exception e){
-            System.out.println(e);
         }
     }
     public static void addOrder(int serverId, double subTotal, double taxRate, double tips, double total){
@@ -110,7 +107,6 @@ public class DBConnector {
 
             newOrder.executeUpdate();
         }catch(Exception e){
-            System.out.println(e);
         }
     }
     public static void addServer(String name, double totalTips){
@@ -129,7 +125,6 @@ public class DBConnector {
 
             newServer.executeUpdate();
         }catch(Exception e){
-            System.out.println(e);
         }
     }
 
@@ -167,7 +162,6 @@ public class DBConnector {
                 nextServerId = id + 1;
             }
         }catch(Exception e){
-            System.out.println(e);
         }
     }
     public static void instantiateOrders(){
@@ -211,7 +205,6 @@ public class DBConnector {
 
             }
         }catch(Exception e){
-            System.out.println(e);
         }
     }
     public static void instantiateMeals(){
@@ -253,7 +246,6 @@ public class DBConnector {
                 nextMealId = id + 1;
             }
         }catch(Exception e){
-            System.out.println(e);
         }
     }
     public static void instantiateFoods(){
@@ -302,7 +294,6 @@ public class DBConnector {
                 Meal.getMeals().get(mealId).addFood(currentFood);
             }
         }catch(Exception e){
-            System.out.println(e);
         }
     }
 }
