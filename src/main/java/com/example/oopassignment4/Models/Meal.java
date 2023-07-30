@@ -194,6 +194,10 @@ public class Meal {
         return meals;
     }
 
+    public static void setMeals(ArrayList<Meal> meals) {
+        Meal.meals = meals;
+    }
+
     public void addFood(Food food){
         foods.add(food);
         /**

@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -70,6 +71,23 @@ public class Controller implements Initializable {
     private void openNewPage(String title, String fxmlPath) {
         try {
             Stage stage = new Stage();
+
+            if(fxmlPath == "server-view.fxml"){
+                //W
+                //ServerController sc = fxmlLoader.getController();
+
+                Food.setFoods(new ArrayList<>());
+                Meal.setMeals(new ArrayList<>());
+                Order.setOrders(new ArrayList<>());
+                Server.setServers(new ArrayList<>());
+
+                DBConnector.instantiateServers();
+                DBConnector.instantiateOrders();
+                DBConnector.instantiateMeals();
+                DBConnector.instantiateFoods();
+            }
+
+
             FXMLLoader fxmlLoader = new FXMLLoader(Controller.class.getResource(fxmlPath));
             Scene scene = new Scene(fxmlLoader.load());
             stage.setTitle(title);

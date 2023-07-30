@@ -72,6 +72,10 @@ public class Food {
         return imagePath;
     }
 
+    public static void setFoods(ArrayList<Food> foods) {
+        Food.foods = foods;
+    }
+
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }

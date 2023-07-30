@@ -15,6 +15,7 @@ public class Server {
     private String name;
     private ArrayList<Order> orders;
     private double totalTips;
+
     private static ArrayList<Server> servers = new ArrayList<>();
 
     /**
@@ -57,9 +58,6 @@ public class Server {
         return servers;
     }
 
-    public void setServers(ArrayList<Server> servers) {
-        this.servers = servers;
-    }
 
     public int getId() {
         return id;
@@ -71,6 +69,10 @@ public class Server {
 
     public String getName() {
         return name;
+    }
+
+    public static void setServers(ArrayList<Server> servers) {
+        Server.servers = servers;
     }
 
     public void setName(String name) {
